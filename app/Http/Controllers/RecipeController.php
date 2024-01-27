@@ -21,9 +21,9 @@ class RecipeController extends Controller
 
             // search by keyword
             ->when($request->input('keyword'), function (Builder $query, string $keyword) {
-                $query
+                $query->where(function(Builder $qq) use ($keyword) {
                     // search recipe name
-                    ->where('name', 'like', '%' . $keyword . '%') // partial match
+                    $qq->where('name', 'like', '%' . $keyword . '%') // partial match
 
                     // search description
                     ->orWhere('description', 'like', '%' . $keyword . '%') // partial match
@@ -35,6 +35,7 @@ class RecipeController extends Controller
 
                     // search steps
                     ->orWhere('steps', 'like', '%' . $keyword . '%'); // partial match
+                });
             })
 
             // search by ingredient
