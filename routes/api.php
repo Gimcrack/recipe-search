@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web']], function () {
     Route::name('recipes.index')->get('/recipes', [RecipeController::class, 'index']);
     Route::name('recipes.show')->get('/recipes/{slug}', [RecipeController::class, 'show']);
+
+    Route::name('authors.index')->get('/authors', AuthorController::class);
+
+    Route::name('ingredients.index')->get('/ingredients', IngredientController::class);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

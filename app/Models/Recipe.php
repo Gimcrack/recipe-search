@@ -15,6 +15,10 @@ class Recipe extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'slug'
+    ];
+
     protected function slug(): Attribute
     {
         return Attribute::make(

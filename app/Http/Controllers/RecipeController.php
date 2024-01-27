@@ -61,6 +61,8 @@ class RecipeController extends Controller
             ], 404);
         }
 
+        $recipe->load('ingredients');
+
         return response()->json($recipe, 200);
     }
 

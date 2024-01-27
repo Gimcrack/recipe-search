@@ -43,6 +43,16 @@ class RecipeTest extends TestCase
     }
 
     /** @test */
+    public function it_can_have_an_optional_image()
+    {
+        $r = Recipe::factory()->create([
+            'image' => null
+        ]);
+
+        $this->assertNull($r->image);
+    }
+
+    /** @test */
     public function it_has_steps()
     {
         $this->expectException(QueryException::class);

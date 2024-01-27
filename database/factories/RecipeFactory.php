@@ -35,10 +35,11 @@ class RecipeFactory extends Factory
 
     protected function getName(): string
     {
-        return str(vsprintf("%s %s %s", [
+        return str(vsprintf("%s %s %s %s", [
             fake()->randomElement(["Mom's","Dad's","Grandma's","Grandpa's"]),
             fake()->randomElement(["world-famous", "award-winning", "best", "no-compromises"]),
-            fake()->randomElement(collect(IngredientSeeder::getIngredients())->map->name->all())
+            fake()->randomElement(["BBQ","grilled","poached","steamed","sous vide","smoked"]),
+            fake()->randomElement(["salmon","cod","trout","lobster","mussels","shrimp","scallops"])
         ]))->title();
     }
 }

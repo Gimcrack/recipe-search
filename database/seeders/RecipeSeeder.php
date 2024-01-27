@@ -26,7 +26,8 @@ class RecipeSeeder extends Seeder
         Recipe::factory()
             ->count(200)
             ->create()
-            ->each($this->populateIngredients(...));
+            ->each($this->populateIngredients(...))
+            ->each($this->setImage(...));
     }
 
     protected function populateIngredients(Recipe $recipe): void
@@ -35,6 +36,13 @@ class RecipeSeeder extends Seeder
             ->shuffle()
             ->take($num_ingredients = fake()->numberBetween(6,20))
             ->mapWithKeys($this->getPivotData(...));
+
+        // add the main ingredient
+        $main = str($recipe->name)->explode(" ")->last();
+        $recipe_ingredients[Ingredient::ofName($main)->id] = [
+            "amount" => 3,
+            "unit" => RecipeUnit::LB->value,
+        ];
 
         $recipe->ingredients()->sync($recipe_ingredients);
     }
@@ -48,5 +56,14 @@ class RecipeSeeder extends Seeder
                 "notes" => fake()->sentence()
             ]
         ];
+    }
+
+    protected function setImage(Recipe $recipe): void
+    {
+        $main = str($recipe->name)->explode(" ")->last();
+
+        $recipe->update([
+            "image" => "https://res.cloudinary.com/codefaber/image/upload/ar_1:1,c_fill,e_art:hairspray,g_auto,w_1000/v1706381551/recipes/{$main}.jpg"
+        ]);
     }
 }
