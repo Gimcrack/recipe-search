@@ -10,9 +10,18 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@headlessui/vue": "^1.7.17",
+    "@heroicons/vue": "^2.1.1",
     "@nuxt/devtools": "latest",
+    "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.17",
     "nuxt": "^3.7.4",
-    "vue": "^3.3.4",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6"
   }
 }
