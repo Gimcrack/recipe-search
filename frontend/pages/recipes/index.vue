@@ -1,5 +1,5 @@
 <script setup>
-import {debounce} from "lodash";
+import {debounce} from "lodash-es";
 import IngredientFilter from "~/components/IngredientFilter.vue";
 
 // api helper
