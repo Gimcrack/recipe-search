@@ -60,8 +60,11 @@ const currentTab = ref(route.hash.replace('#','') || 'ingredients');
                     </nav>
 
                     <div class="mt-4">
-                        <h1 class="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl whitespace-nowrap">
+                        <h1 class="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl whitespace-nowrap">
                             {{ recipe.name }}</h1>
+
+                        <h3 class="text-base text-slate-700 whitespace-nowrap mt-2">
+                            By {{ recipe.author }}</h3>
                     </div>
 
                     <section aria-labelledby="information-heading" class="mt-4">
