@@ -1,10 +1,10 @@
 <template>
     <Combobox nullable as="div" :value="modelValue" @update:modelValue="(val) => $emit('update:model-value', val || '')">
-        <div class="relative h-full">
+        <div class="relative h-full w-full">
             <ComboboxInput
                 ref="inputEl"
                 placeholder="Search By Author"
-                class="w-64 rounded-md border-0 bg-white py-2.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-base sm:leading-6"
+                class="w-full lg:w-64 rounded-md border-0 bg-white py-2.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-base sm:leading-6"
                 :displayValue="(email) => email || ''"
                 @change="query = $event.target.value || ''"/>
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">

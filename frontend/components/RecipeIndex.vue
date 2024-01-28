@@ -17,7 +17,7 @@ defineEmits([
         <div v-if="recipes?.data.length"  class="results">
             <!-- pagination -->
             <div
-                class="mx-auto flex px-3.5 py-2.5 bg-slate-50 rounded-lg items-center justify-between space-x-4 mb-7 font-semibold">
+                class="mx-auto w-full flex flex-col md:flex-row px-3.5 py-2.5 bg-slate-50 rounded-lg items-center justify-between space-x-4 mb-7 font-semibold">
                 <span>Showing Results {{ recipes.from }}-{{ recipes.to }} of {{ recipes.total }}</span>
                 <div class="flex space-x-1.5 items-center">
                     <button @click="$emit('navigate', recipes.first_page_url)"
@@ -44,7 +44,7 @@ defineEmits([
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
                 <RecipePreview v-for="recipe in recipes.data" :recipe="recipe"/>
             </div>
         </div>

@@ -64,7 +64,7 @@ onMounted(fetchIngredients);
         <!-- search -->
         <div class="text-lg">
             <label for="keyword" class="block text-sm font-medium leading-6 text-gray-900">Search</label>
-            <div class="mt-2 mb-8 flex space-x-2">
+            <div class="mt-2 mb-8 flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
                 <input @input="debouncedFetchRecipes" v-model="keyword" type="text" name="keyword" id="keyword"
                        class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                            placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-base sm:leading-6"
