@@ -32,7 +32,15 @@ const currentTab = ref(route.hash.replace('#','') || 'ingredients');
             <div
                 class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                 <div class="lg:max-w-lg lg:self-end">
-                    <nav aria-label="Breadcrumb">
+                    <!-- Recipe image xs--md -->
+                    <div class="lg:hidden -mx-4 sm:-mx-6 -mt-16 sm:-mt-24 ">
+                        <div class="aspect-h-3 aspect-w-5 overflow-hidden rounded-t-lg">
+                            <img :src="recipe.image" :alt="recipe.name"
+                                 class="h-full w-full object-cover object-center"/>
+                        </div>
+                    </div>
+
+                    <nav class="mt-4 lg:mt-0" aria-label="Breadcrumb">
                         <ol role="list" class="flex items-center space-x-2 text-sm">
                             <li>
                                 <a @click.prevent="router.back" href="/recipes" class="font-medium text-emerald-600 hover:text-emerald-500">
@@ -175,8 +183,8 @@ const currentTab = ref(route.hash.replace('#','') || 'ingredients');
                     </section>
                 </div>
 
-                <!-- Recipe image -->
-                <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-start">
+                <!-- Recipe image large view -->
+                <div class="mt-10 hidden lg:block lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-start">
                     <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
                         <img :src="recipe.image" :alt="recipe.name"
                              class="h-full w-full object-cover object-center"/>
