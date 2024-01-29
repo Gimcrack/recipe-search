@@ -10,10 +10,11 @@ const props = defineProps({
 
 <template>
     <article :style="`background:url('${recipe.image}') no-repeat center;background-size:cover`"
-             class="flex flex-col justify-end space-y-4 bg-slate-300
+             class="shrink flex flex-col justify-end space-y-4 bg-slate-300
              transition-all duration-150
              cursor-pointer
-             shadow-lg shadow-slate-400 p-4 rounded-lg w-64 h-80
+             shadow-lg shadow-slate-400 p-4 rounded-lg
+             w-full sm:w-64 h-80
              hover:scale-110 group relative
         ">
         <NuxtLink class="font-semibold bg-gradient-to-t from-slate-50/95 from-25% rounded-b-lg

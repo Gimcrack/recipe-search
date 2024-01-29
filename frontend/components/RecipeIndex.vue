@@ -17,8 +17,8 @@ defineEmits([
         <div v-if="recipes?.data?.length"  class="results mb-24">
             <!-- pagination -->
             <div
-                class="mx-auto w-full flex flex-col md:flex-row px-3.5 py-2.5 bg-slate-50 rounded-lg items-center justify-between space-x-4 mb-7 font-semibold">
-                <span>Showing Results {{ recipes.from }}-{{ recipes.to }} of {{ recipes.total }}</span>
+                class="text-base sm:text-lg mx-auto w-full flex flex-col md:flex-row px-3.5 py-2.5 bg-slate-50 rounded-lg items-center justify-between space-x-4 mb-7 font-semibold">
+                <span class="whitespace-nowrap">Showing Results {{ recipes.from }}-{{ recipes.to }} of {{ recipes.total }}</span>
                 <div class="flex space-x-1.5 items-center">
                     <button @click="$emit('navigate', recipes.first_page_url)"
                             :disabled="recipes.current_page === 1"
@@ -30,7 +30,7 @@ defineEmits([
                             class="p-2 border border-slate-400 hover:bg-emerald-100 rounded-md bg-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent">
                         <ChevronLeftIcon class="w-4 h-4"/>
                     </button>
-                    <span class="font-semibold px-4">Page {{ recipes.current_page }} of {{ recipes.last_page }}</span>
+                    <span class="font-semibold px-4 whitespace-nowrap">Page {{ recipes.current_page }} of {{ recipes.last_page }}</span>
                     <button @click="$emit('navigate', recipes.next_page_url)"
                             :disabled="recipes.current_page === recipes.last_page"
                             class="p-2 border border-slate-400 hover:bg-emerald-100 rounded-md bg-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent">
@@ -44,7 +44,7 @@ defineEmits([
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 <RecipePreview v-for="recipe in recipes.data" :recipe="recipe"/>
             </div>
         </div>
