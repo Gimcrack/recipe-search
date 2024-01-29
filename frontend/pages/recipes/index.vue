@@ -3,6 +3,7 @@ import {debounce} from "lodash-es";
 import {watch} from "vue";
 import {useFetch} from "#app";
 
+
 // api helper
 const {$api} = useNuxtApp();
 const route = useRoute();
@@ -64,10 +65,7 @@ const navigate = async function (url) {
         <!-- search -->
         <div class="text-lg">
             <div class="mt-2 mb-8 flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
-                <input @input="debouncedFilterRecipes" v-model="keyword" type="text" name="keyword" id="keyword"
-                       class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
-                           placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-base sm:leading-6"
-                       placeholder="Search By Keyword"/>
+                <KeywordFilter v-model="keyword" @update:modelValue="debouncedFilterRecipes"/>
 
                 <AuthorFilter v-model="email" @update:modelValue="debouncedFilterRecipes"/>
 
@@ -75,7 +73,7 @@ const navigate = async function (url) {
 
                 <button @click="resetFilters"
                         class="whitespace-nowrap text-white font-semibold p-2 bg-emerald-500 hover:bg-emerald-700 rounded-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent">
-                    Reset Filters
+                    Reset
                 </button>
             </div>
         </div>

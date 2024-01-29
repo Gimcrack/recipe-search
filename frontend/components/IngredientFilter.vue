@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref, watch} from 'vue'
-import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {CheckIcon, ChevronUpDownIcon, XCircleIcon} from '@heroicons/vue/20/solid'
 import {
     Combobox,
     ComboboxButton,
@@ -64,6 +64,10 @@ onMounted(() => {
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                 <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"/>
             </ComboboxButton>
+            <button v-if="!!selectedItem" @click.prevent="$emit('update:model-value', '')"
+                            class="absolute inset-y-0 right-6 flex items-center rounded-r-md px-2 focus:outline-none">
+                <XCircleIcon class="h-5 w-5 text-gray-400" aria-hidden="true"/>
+            </button>
 
             <ComboboxOptions v-if="filteredIngredients.length > 0"
                              class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">

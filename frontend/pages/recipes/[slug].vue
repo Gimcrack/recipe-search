@@ -43,7 +43,8 @@ const currentTab = ref(route.hash.replace('#','') || 'ingredients');
                     <nav class="mt-4 lg:mt-0" aria-label="Breadcrumb">
                         <ol role="list" class="flex items-center space-x-2 text-sm">
                             <li>
-                                <a @click.prevent="router.back" href="/recipes" class="font-medium text-emerald-600 hover:text-emerald-500">
+                                <a @click.prevent="router.back" href="/recipes" class="flex items-center whitespace-nowrap font-medium text-emerald-600 hover:text-emerald-500">
+                                    <ChevronLeftIcon class="h-4 w-4"/>
                                     Recipes
                                 </a>
                             </li>
