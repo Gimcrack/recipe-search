@@ -1,5 +1,59 @@
+<script setup>
+import {computed, ref, watch} from 'vue'
+import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {
+    Combobox,
+    ComboboxButton,
+    ComboboxInput,
+    ComboboxLabel,
+    ComboboxOption,
+    ComboboxOptions,
+} from '@headlessui/vue'
+
+// api helper
+const {$api} = useNuxtApp();
+const {data: ingredients} = await useFetch($api.buildUrl('ingredients'));
+
+const props = defineProps({
+    modelValue: {}
+});
+
+const inputEl = ref(null);
+const query = ref(props.modelValue || '')
+const selectedItem = ref(props.modelValue)
+const filteredIngredients = computed(() =>
+    query.value === ''
+        ? ingredients.value
+        : ingredients.value.filter((ingredient) => {
+            return ingredient.toLowerCase().includes(query.value.toLowerCase())
+        })
+)
+
+defineEmits([
+    'update:model-value',
+]);
+
+watch(() => props.modelValue, (newVal) => {
+    query.value = newVal || '';
+
+    inputEl.value.$el.value = query.value;
+
+    selectedItem.value = props.modelValue;
+});
+
+onMounted(() => {
+    getCurrentInstance().emit("update:model-value", selectedItem.value);
+    query.value = props.modelValue;
+
+    inputEl.value.$el.value = props.modelValue;
+
+    selectedItem.value = props.modelValue;
+});
+</script>
+
 <template>
-    <Combobox nullable as="div" :value="modelValue" @update:modelValue="(val) => $emit('update:model-value', val || '')">
+    <Combobox nullable as="div" :value="modelValue"
+              @update:modelValue="(val) => $emit('update:model-value', val || '')">
         <div class="relative h-full">
             <ComboboxInput
                 ref="inputEl"
@@ -13,7 +67,8 @@
 
             <ComboboxOptions v-if="filteredIngredients.length > 0"
                              class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <ComboboxOption v-for="ingredient in filteredIngredients" :key="ingredient" :value="ingredient" as="template"
+                <ComboboxOption v-for="ingredient in filteredIngredients" :key="ingredient" :value="ingredient"
+                                as="template"
                                 v-slot="{ active, selected }">
                     <li :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-emerald-600 text-white' : 'text-gray-900']">
                         <span :class="['block truncate', selected && 'font-semibold']">
@@ -31,44 +86,3 @@
     </Combobox>
 </template>
 
-<script setup>
-import {computed, ref, watch} from 'vue'
-import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
-import {
-    Combobox,
-    ComboboxButton,
-    ComboboxInput,
-    ComboboxLabel,
-    ComboboxOption,
-    ComboboxOptions,
-} from '@headlessui/vue'
-
-const props = defineProps({
-    ingredients: Array,
-    modelValue: String
-});
-
-defineEmits([
-    'update:model-value',
-]);
-
-watch(() => props.modelValue, (newVal) => {
-    query.value = newVal || '';
-
-    if (! newVal) {
-        inputEl.value.$el.value='';
-    }
-});
-
-const inputEl = ref(null);
-
-const query = ref('')
-const selectedPerson = ref(props.modelValue)
-const filteredIngredients = computed(() =>
-    query.value === ''
-        ? props.ingredients
-        : props.ingredients.filter((ingredient) => {
-            return ingredient.toLowerCase().includes(query.value.toLowerCase())
-        })
-)
-</script>

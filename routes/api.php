@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => []], function () {
     Route::name('recipes.index')->get('/recipes', [RecipeController::class, 'index']);
     Route::name('recipes.show')->get('/recipes/{slug}', [RecipeController::class, 'show']);
 

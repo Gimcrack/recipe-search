@@ -1,3 +1,55 @@
+<script setup>
+import {computed, ref, watch} from 'vue'
+import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {
+    Combobox,
+    ComboboxButton,
+    ComboboxInput,
+    ComboboxLabel,
+    ComboboxOption,
+    ComboboxOptions,
+} from '@headlessui/vue'
+const {$api} = useNuxtApp();
+const {data: authors} = await useFetch($api.buildUrl('authors'));
+
+const props = defineProps({
+    modelValue: {}
+});
+
+const inputEl = ref(null);
+
+const query = ref('')
+const selectedItem = ref(props.modelValue)
+const filteredPeople = computed(() =>
+    query.value === ''
+        ? authors.value
+        : authors.value.filter((email) => {
+            return email.toString().toLowerCase().includes(query.value.toLowerCase())
+        })
+)
+
+defineEmits([
+    'update:model-value',
+]);
+
+watch(() => props.modelValue, (newVal) => {
+    query.value = newVal || '';
+
+    inputEl.value.$el.value = query.value;
+
+    selectedItem.value = props.modelValue;
+});
+
+onMounted(() => {
+    getCurrentInstance().emit("update:model-value", selectedItem.value);
+    query.value = props.modelValue;
+
+    inputEl.value.$el.value = props.modelValue;
+
+    selectedItem.value = props.modelValue;
+});
+</script>
+
 <template>
     <Combobox nullable as="div" :value="modelValue" @update:modelValue="(val) => $emit('update:model-value', val || '')">
         <div class="relative h-full w-full">
@@ -31,44 +83,3 @@
     </Combobox>
 </template>
 
-<script setup>
-import {computed, ref, watch} from 'vue'
-import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
-import {
-    Combobox,
-    ComboboxButton,
-    ComboboxInput,
-    ComboboxLabel,
-    ComboboxOption,
-    ComboboxOptions,
-} from '@headlessui/vue'
-
-const props = defineProps({
-    authors: Array,
-    modelValue: String
-});
-
-defineEmits([
-    'update:model-value',
-]);
-
-watch(() => props.modelValue, (newVal) => {
-    query.value = newVal || '';
-
-    if (! newVal) {
-        inputEl.value.$el.value='';
-    }
-});
-
-const inputEl = ref(null);
-
-const query = ref('')
-const selectedPerson = ref(props.modelValue)
-const filteredPeople = computed(() =>
-    query.value === ''
-        ? props.authors
-        : props.authors.filter((email) => {
-            return email.toLowerCase().includes(query.value.toLowerCase())
-        })
-)
-</script>

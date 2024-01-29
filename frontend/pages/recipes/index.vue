@@ -1,59 +1,57 @@
 <script setup>
 import {debounce} from "lodash-es";
-import IngredientFilter from "~/components/IngredientFilter.vue";
+import {watch} from "vue";
+import {useFetch} from "#app";
 
 // api helper
 const {$api} = useNuxtApp();
+const route = useRoute();
+const router = useRouter();
 
-// will populate from api
-const recipes = ref(null);
-const authors = ref([]);
-const ingredients = ref([]);
+// populate from api
+const {data: recipes} = await useFetch($api.buildUrl('recipes'));
 
 // filters
-const ingredient = ref('');
-const email = ref('');
-const keyword = ref('')
+const ingredient = ref(route.query?.ingredient || '');
+const email = ref(route.query?.email ||'');
+const keyword = ref(route.query?.keyword ||'');
 
+// watch filters for changes
+watch(ingredient, () => {
+    router.push({query : {...route.query, ingredient: ingredient.value}});
+});
+watch(email, () => {
+    router.push({query : {...route.query, email: email.value}});
+});
+watch(keyword, () => {
+    router.push({query : {...route.query, keyword: keyword.value}});
+});
+
+onMounted(() => {
+    ingredient.value = route.query?.ingredient || '';
+    email.value = route.query?.email || '';
+    keyword.value = route.query?.keyword || '';
+});
 
 const resetFilters = function () {
     ingredient.value = '';
     email.value = '';
     keyword.value = '';
 
-    debouncedFetchRecipes();
+    debouncedFilterRecipes();
 }
 
-const fetchRecipes = async function () {
+const filterRecipes = async function () {
     let qs = new URLSearchParams({ingredient: ingredient.value, email: email.value, keyword: keyword.value});
-
-    let resp = await $api.get('recipes?' + qs);
-    recipes.value = resp.data;
+    await navigate($api.buildUrl('recipes?' + qs));
 }
 
-const debouncedFetchRecipes = debounce(fetchRecipes, 300);
-
-const fetchAuthors = async function () {
-    let resp = await $api.get('authors');
-    authors.value = resp.data;
-}
-
-const fetchIngredients = async function () {
-    let resp = await $api.get('ingredients');
-    ingredients.value = resp.data;
-}
+const debouncedFilterRecipes = debounce(filterRecipes, 300);
 
 const navigate = async function (url) {
-    let resp = await $api.getUrl(url);
-    recipes.value = resp.data;
+    const {data} = await useFetch(url);
+    recipes.value = data.value
 }
-
-
-// perform initial fetches
-onMounted(fetchRecipes);
-onMounted(fetchAuthors);
-onMounted(fetchIngredients);
-
 
 </script>
 
@@ -63,18 +61,15 @@ onMounted(fetchIngredients);
 
         <!-- search -->
         <div class="text-lg">
-            <label for="keyword" class="block text-sm font-medium leading-6 text-gray-900">Search</label>
             <div class="mt-2 mb-8 flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
-                <input @input="debouncedFetchRecipes" v-model="keyword" type="text" name="keyword" id="keyword"
+                <input @input="debouncedFilterRecipes" v-model="keyword" type="text" name="keyword" id="keyword"
                        class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                            placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-base sm:leading-6"
                        placeholder="Search By Keyword"/>
 
-                <AuthorFilter v-model="email" @update:modelValue="debouncedFetchRecipes" v-if="authors.length"
-                              :authors="authors"/>
+                <AuthorFilter v-model="email" @update:modelValue="debouncedFilterRecipes"/>
 
-                <IngredientFilter v-model="ingredient" @update:modelValue="debouncedFetchRecipes"
-                                  v-if="ingredients.length" :ingredients="ingredients"/>
+                <IngredientFilter v-model="ingredient" @update:modelValue="debouncedFilterRecipes" />
 
                 <button @click="resetFilters"
                         class="whitespace-nowrap text-white font-semibold p-2 bg-emerald-500 hover:bg-emerald-700 rounded-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent">

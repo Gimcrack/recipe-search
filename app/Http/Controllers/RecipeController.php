@@ -44,7 +44,7 @@ class RecipeController extends Controller
                     $qq->where('name', 'like', '%' . $ingredient . '%'); // partial match
                 });
             })
-            ->paginate(10)
+            ->paginate(12)
             ->withQueryString();
     }
 

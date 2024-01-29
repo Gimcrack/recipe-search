@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --host 0.0.0.0",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -17,7 +17,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.17",
     "lodash-es": "^4.17.21",
-    "nuxt": "^3.7.4",
+    "nuxt": "^3.9.3",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "vue": "^3.4.15",

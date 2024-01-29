@@ -14,7 +14,7 @@ defineEmits([
 
 <template>
     <div class="wrapper">
-        <div v-if="recipes?.data.length"  class="results">
+        <div v-if="recipes?.data?.length"  class="results mb-24">
             <!-- pagination -->
             <div
                 class="mx-auto w-full flex flex-col md:flex-row px-3.5 py-2.5 bg-slate-50 rounded-lg items-center justify-between space-x-4 mb-7 font-semibold">
@@ -44,7 +44,7 @@ defineEmits([
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 <RecipePreview v-for="recipe in recipes.data" :recipe="recipe"/>
             </div>
         </div>
