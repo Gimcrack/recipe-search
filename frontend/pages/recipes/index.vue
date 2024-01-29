@@ -51,6 +51,8 @@ const debouncedFilterRecipes = debounce(filterRecipes, 300);
 const navigate = async function (url) {
     const {data} = await useFetch(url);
     recipes.value = data.value
+
+    window.scrollTo({top:0, left: 0, behavior: 'smooth'});
 }
 
 </script>

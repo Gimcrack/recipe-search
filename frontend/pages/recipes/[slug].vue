@@ -103,7 +103,7 @@ const currentTab = ref(route.hash.replace('#','') || 'ingredients');
                                 <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
                                 <select id="tabs" name="tabs" v-model="currentTab"
                                         class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm">
-                                    <option v-for="tab in tabs" :key="tab.name">{{
+                                    <option :value="tab.name.toLowerCase()" v-for="tab in tabs" :key="tab.name">{{
                                             tab.name
                                         }}
                                     </option>
