@@ -6,7 +6,13 @@ export default defineNuxtPlugin(() => {
 
     const api = {
         host() {
-            return config.public.apiHost;
+            // browser context
+            if (!!window) {
+                return config.public.apiHost;
+            }
+
+            // ssr context e.g. docker container
+            return config.public.ssrHost;
         },
 
         prefix: '/api/',

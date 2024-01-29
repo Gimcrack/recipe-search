@@ -23,8 +23,8 @@ const query = ref(props.modelValue || '')
 const selectedItem = ref(props.modelValue)
 const filteredIngredients = computed(() =>
     query.value === ''
-        ? ingredients.value
-        : ingredients.value.filter((ingredient) => {
+        ? (ingredients.value || [])
+        : (ingredients.value || []).filter((ingredient) => {
             return ingredient.toLowerCase().includes(query.value.toLowerCase())
         })
 )

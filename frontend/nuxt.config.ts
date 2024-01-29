@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiHost: process.env.API_HOST || 'http://localhost:8888'
+            apiHost: process.env.API_HOST || 'http://localhost:8888',
+            ssrHost: process.env.SSR_HOST || process.env.API_HOST || 'http://localhost:80'
         }
     },
     plugins: [

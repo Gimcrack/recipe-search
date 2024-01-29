@@ -53,7 +53,23 @@ class RecipeSeeder extends Seeder
             Ingredient::ofName($ingredient)->id => [
                 "amount" => fake()->numberBetween(1,4),
                 "unit" => fake()->randomElement(RecipeUnit::toArray()),
-                "notes" => fake()->sentence()
+                "notes" => fake()->randomElement([
+                    "to taste",
+                    "room temperature",
+                    "chilled",
+                    "frozen",
+                    "in pieces",
+                    "from the shores of Ireland",
+                    "arranged in a hexagon",
+                    "plus a little more for dipping",
+                    "",
+                    "",
+                    "",
+                    "marinated for 12 days",
+                    "dry aged in butter",
+                    "salted",
+                    "from a dank basement"
+                ])
             ]
         ];
     }
@@ -61,9 +77,10 @@ class RecipeSeeder extends Seeder
     protected function setImage(Recipe $recipe): void
     {
         $main = str($recipe->name)->explode(" ")->last();
+        $variant = fake()->randomElement(["","2","3"]);
 
         $recipe->update([
-            "image" => "https://res.cloudinary.com/codefaber/image/upload/ar_1:1,c_fill,e_art:hairspray,g_auto,w_1000/v1706381551/recipes/{$main}.jpg"
+            "image" => "https://res.cloudinary.com/codefaber/image/upload/ar_1:1,c_fill,e_art:hairspray,g_auto,w_1000/v1706381551/recipes/{$main}{$variant}.jpg"
         ]);
     }
 }

@@ -22,8 +22,8 @@ const query = ref('')
 const selectedItem = ref(props.modelValue)
 const filteredPeople = computed(() =>
     query.value === ''
-        ? authors.value
-        : authors.value.filter((email) => {
+        ? (authors.value || [])
+        : (authors.value || []).filter((email) => {
             return email.toString().toLowerCase().includes(query.value.toLowerCase())
         })
 )
